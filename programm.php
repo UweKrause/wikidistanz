@@ -11,14 +11,6 @@ $article_compare_decode = rawurldecode($article_compare);
  * Single point of control
  */
  
-// Sets the areacode which defines which Wikipedia language will be used
-
-// see https://meta.wikimedia.org/wiki/List_of_Wikipedias
-// for different areacodes
-
-define('AREACODE', 'de');
-
-
 
 /**
  * Limit for tries to find a connection between two articels
@@ -32,6 +24,18 @@ $limit_fuenfer = 15;
 
 $minimum_links_in_article = 1;
 $minimum_backlinks_in_article = 5;
+
+
+
+/**
+ * prepares the cachedirectory for the selected language
+ */
+
+prepare_cachefolders();
+
+/**
+ * Loop for checking the links between the wikipedia articles
+ */
 
 
 if($article_request != "" && $article_compare != "" ) {

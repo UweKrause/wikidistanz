@@ -1,6 +1,16 @@
 <?php
 
 /**
+ * Sets the areacode which defines which Wikipedia language will be used
+ */
+ 
+// see https://meta.wikimedia.org/wiki/List_of_Wikipedias
+// for different areacodes
+
+define('AREACODE', 'de');
+
+
+/**
  * Constants for the program
  */
  
@@ -8,8 +18,7 @@
  define('CACHEDIR', 'cache_'. AREACODE. '_article');
  
  define('BACKLINKCACHEDIR', 'cache_'. AREACODE. '_backlinks/');
- define('ARTICLECACHEDIR', 'cache_'. AEREACODE. '_article/');
-
+ define('ARTICLECACHEDIR', 'cache_'. AREACODE. '_article/');
 
 
 /**
@@ -32,12 +41,6 @@ require_once('functions/cache_links.php');
 require_once('functions/cache_backlinks.php');
 require_once('functions/microtime_float.php');
 require_once('functions/wikipedia_util.php');
-
-
-
-
-
-
 
 
 ?>
