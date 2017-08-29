@@ -40,6 +40,8 @@ Um die Behauptung zu beweisen oder zu widerlegen, müsste jeder Artikel untersuc
 Außer einer halbwegs aktuellen php Version sind keine weiteren Abhängigkeiten vorhanden.
 
 Getestet wurde der Code in einer Instanz der Cloud9 IDE ( http://c9.io ).
-(Import von Github, Starten des Servers aus der IDE, los gehts!)
+(Eröffnen eines neuen Workspace mit dem "php, Apache & MySql" Templte, Import von Github, Starten des Servers aus der IDE, los gehts!)
 
 Da die Wikipedia-API Calls pro Aufruf seitens der Wikipedia künstlich auf eine (1) Sekunde pro Aufruf gedrosselt werden und da für längere Artikel auch mal mehrere Aufrufe pro Artikel notwendig werden, ist es notwendig, die Zeit für einen Timeout deutlich zu erhöhen.
+
+Aus dem gleichen Grund wird ein Cache benutzt, hierfür muss php im Dateisystem schreiben dürfen.
