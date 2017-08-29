@@ -35,7 +35,13 @@
     
     
       <?php
+      /**
+       * The Program is loaded here.
+       * Preparations are in the functions.php
+       */
+      
       require_once('functions.php');
+      
       $time_start = microtime_float();
       
       require_once('programm.php');
