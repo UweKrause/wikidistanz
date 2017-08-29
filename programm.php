@@ -1,14 +1,27 @@
 <?php
 
 // ToDo: bessere input sanitation
-$requestartikel = rawurlencode(trim($form_start));
-$requestartikel_decode = rawurldecode($requestartikel);
+$article_request = rawurlencode(trim($form_start));
+$article_request_decode = rawurldecode($article_request);
 
-$vergleichartikel = rawurlencode(trim($form_ziel));
-$vergleichartikel_decode = rawurldecode($vergleichartikel);
+$article_compare = rawurlencode(trim($form_ziel));
+$article_compare_decode = rawurldecode($article_compare);
 
 /**
- * SPOC
+ * Single point of control
+ */
+ 
+// Sets the areacode which defines which Wikipedia language will be used
+
+// see https://meta.wikimedia.org/wiki/List_of_Wikipedias
+// for different areacodes
+
+define('AREACODE', 'de');
+
+
+
+/**
+ * Limit for tries to find a connection between two articels
  */
 
 // 0 fuer kein Limit // STIMMT DAS NOCH???
@@ -16,25 +29,25 @@ $limit_dreier = 500;
 $limit_vierer = 50;
 $limit_fuenfer = 15;
 
-$mindestanzahl_artikellinks = 1;
-$mindestanzahl_backlinks = 5;
+
+$minimum_links_in_article = 1;
+$minimum_backlinks_in_article = 5;
 
 
-
-if($requestartikel != "" && $vergleichartikel != "" ) {
+if($article_request != "" && $article_compare != "" ) {
 	
-	if($requestartikel == $vergleichartikel) {
+	if($article_request == $article_compare) {
 		// Anfrage und Vergleichsartikel sind gleich (a == v)
 		
 		print("<p>Artikel und Vergleich sind gleich!</p>");	
-		print("$requestartikel_decode<br>");	
+		print("$article_request_decode<br>");	
 		
 	} else {
 		
 		//	Man muesste die jetzt noch nicht laden, aber ich wuesste gerne jetzt schon, ob die angeforderten Artikel gueltig sind
 		
-		$artikellinks = cache_links($requestartikel);
-		$backlinks = cache_backlinks($vergleichartikel);
+		$artikellinks = cache_links($article_request);
+		$backlinks = cache_backlinks($article_compare);
 		
 		$count_artikellinks = count($artikellinks);
 		$count_backlinks = count($backlinks);
@@ -45,8 +58,8 @@ if($requestartikel != "" && $vergleichartikel != "" ) {
 			<fieldset>
 				<legend>Zu &uuml;berpr&uuml;fende Artikel</legend>
 				
-				"<?= w_url($requestartikel_decode) ?>" verweist auf <?= $count_artikellinks ?> Artikel.<br>
-				<?= $count_backlinks ?> Artikel verweisen auf "<?= w_url($vergleichartikel_decode) ?>".
+				"<?= w_url($article_request_decode) ?>" verweist auf <?= $count_artikellinks ?> Artikel.<br>
+				<?= $count_backlinks ?> Artikel verweisen auf "<?= w_url($article_compare_decode) ?>".
 			</fieldset>
 		<p></p>
 		<fieldset>
@@ -54,14 +67,14 @@ if($requestartikel != "" && $vergleichartikel != "" ) {
 		
 		<?php
 		
-		if($count_artikellinks >= $mindestanzahl_artikellinks && $count_backlinks >= $mindestanzahl_backlinks) {
+		if($count_artikellinks >= $minimum_links_in_article && $count_backlinks >= $minimum_backlinks_in_article) {
 			
-			if(in_array($requestartikel_decode, $backlinks)) {
+			if(in_array($article_request_decode, $backlinks)) {
 				// Vergleichsartikel ist direkt verlinkt ( a => v )
 				
-//				print("$requestartikel_decode &rarr; $vergleichartikel_decode<br>");	
-				print(w_url($requestartikel_decode).
-					" &rarr; ". w_url($vergleichartikel_decode).
+//				print("$article_request_decode &rarr; $article_compare_decode<br>");	
+				print(w_url($article_request_decode).
+					" &rarr; ". w_url($article_compare_decode).
 					"</br>\n");	
 
 				
@@ -76,11 +89,11 @@ if($requestartikel != "" && $vergleichartikel != "" ) {
 					if(in_array($link, $backlinks)) {
 						// Eine Verlinkung des Artikel ist mit dem Vergleichsartikel verlinkt ( a => x => v )
 						
-						// print(w_url($requestartikel_decode). " &rarr; $link &rarr; $vergleichartikel_decode<br>\n");	
+						// print(w_url($article_request_decode). " &rarr; $link &rarr; $article_compare_decode<br>\n");	
 						
-						print(w_url($requestartikel_decode).
+						print(w_url($article_request_decode).
 									" &rarr; ". w_url($link).
-									" &rarr; ". w_url($vergleichartikel_decode).
+									" &rarr; ". w_url($article_compare_decode).
 									"</br>\n");	
 						
 						$anzahl_dreierverbindungen++;
@@ -107,10 +120,10 @@ if($requestartikel != "" && $vergleichartikel != "" ) {
 							if (in_array($ebene3artikel, $backlinks)) {
 								// Eine Verlinkung des Artikel ist ueber Umwege mit dem Vergleichsartikel verlinkt ( a => x => y => v )
 								
-								print(w_url($requestartikel_decode).
+								print(w_url($article_request_decode).
 									" &rarr; ". w_url($link).
 									" &rarr; ". w_url($ebene3artikel).
-									" &rarr; ". w_url($vergleichartikel_decode).
+									" &rarr; ". w_url($article_compare_decode).
 									"</br>\n");	
 								
 								// Wenn wir eine vierer Verbindung gefunde haben, freuen wir uns ersteinmal
@@ -144,13 +157,13 @@ if($requestartikel != "" && $vergleichartikel != "" ) {
 								if (in_array($ebene4artikel, $backlinks)) {
 									// Eine Verlinkung des Artikel ist ueber Umwege mit dem Vergleichsartikel verlinkt ( a => x => y => z => v )
 									
-									// print("$requestartikel_decode &rarr; $link &rarr; $ebene3artikel &rarr; $ebene4artikel &rarr; $vergleichartikel_decode</br>\n");
+									// print("$article_request_decode &rarr; $link &rarr; $ebene3artikel &rarr; $ebene4artikel &rarr; $article_compare_decode</br>\n");
 									
-									print(w_url($requestartikel_decode).
+									print(w_url($article_request_decode).
 									" &rarr; ". w_url($link).
 									" &rarr; ". w_url($ebene3artikel).
 									" &rarr; ". w_url($ebene4artikel).
-									" &rarr; ". w_url($vergleichartikel_decode).
+									" &rarr; ". w_url($article_compare_decode).
 									"</br>\n");
 									
 									// Wenn wir eine fuenfer Verbindung gefunde haben, freuen wir uns ersteinmal
@@ -183,13 +196,13 @@ if($requestartikel != "" && $vergleichartikel != "" ) {
 			<?php
 			
 		} else {
-			// $mindestanzahl_backlinks
-			// $mindestanzahl_artikellinks
+			// $minimum_backlinks_in_article
+			// $minimum_links_in_article
 			print("<p>Artikel oder Vergleichartikel kein gueltiger Wikipedia Artikel!<br>
 			(Gross/Kleinschreibung richtig beachtet?)<br>
 			Ausserdem gelten folgende Regeln: (experimentell!)<br>
-			Mindestanzahl Links bei Startartikel: $mindestanzahl_artikellinks<br>
-			Mindestanzahl Links ZU Zielartikel: $mindestanzahl_backlinks</p>");
+			Mindestanzahl Links bei Startartikel: $minimum_links_in_article<br>
+			Mindestanzahl Links ZU Zielartikel: $minimum_backlinks_in_article</p>");
 		}
 	}
 } else {
