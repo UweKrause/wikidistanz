@@ -1,4 +1,4 @@
-# Wikidistanz.
+# Wikidistanz
 
 Auf dem Weihnachtsmarkt mit Kommilitonen?
 Das kann doch nicht gut enden.
