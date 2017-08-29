@@ -1,4 +1,4 @@
-Wikidistanz.
+# Wikidistanz.
 
 Auf dem Weihnachtsmarkt mit Kommilitonen?
 Das kann doch nicht gut enden.
@@ -36,6 +36,10 @@ Bisher wurde kein einziger Artikel gefunden, der mehr als 4 Klicks zu Adolf Hitl
 Ausblick:
 Um die Behauptung zu beweisen oder zu widerlegen, müsste jeder Artikel untersucht werden, wenigstens solange, bis ein Artikel gefunden wurde, der weiter als 4 Klicks eintfernt ist.
 
+# Benutzung
+Außer einer halbwegs aktuellen php Version sind keine weiteren Abhängigkeiten vorhanden.
 
+Getestet wurde der Code in einer Instanz der Cloud9 IDE ( http://c9.io ).
+(Import von Github, Starten des Servers aus der IDE, los gehts!)
 
-
+Da die Wikipedia-API Calls pro Aufruf seitens der Wikipedia künstlich auf eine (1) Sekunde pro Aufruf gedrosselt werden und da für längere Artikel auch mal mehrere Aufrufe pro Artikel notwendig werden, ist es notwendig, die Zeit für einen Timeout deutlich zu erhöhen.
