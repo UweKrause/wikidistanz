@@ -4,7 +4,7 @@ Auf dem Weihnachtsmarkt mit Kommilitonen?
 Das kann doch nicht gut enden.
 So also auch im Dezember 2016, als jemand das "Wikipediaspiel" zu Sprache bringt.
 
-Die Regeln sind einfach, von einem beliebigen Statartikel ist zu einem bestimmten Zielartikel mit möglichst wenig Klicks durch die Wikipedia zu navigieren.
+Die Regeln sind einfach, von einem beliebigen Startartikel ist zu einem bestimmten Zielartikel mit möglichst wenig Klicks durch die Wikipedia zu navigieren.
 Alleine ist es ein Spiel gegen die Zeit, mit mehreren ist es die Suche nach dem effizientesten Weg.
 
 Einer der Teilnehmer der Weihnachtsmarktrunde stellte slso bald die Behauptung auf, dass "jeder Artikel in der deutschen Wikipedia mit höchstens 4 Klicks zu Adolf Hitler führt".
